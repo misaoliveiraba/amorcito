@@ -29,7 +29,7 @@
       position: relative;
       width: 100%;
       max-width: 360px;
-      height: 370px;
+      height: 360px;
       margin: 20px auto;
       border-radius: 15px;
       overflow: hidden;
@@ -158,18 +158,15 @@
     "Em cada batida do meu coração, existe um 'eu te amo' que nasceu desde o nosso primeiro olhar."
   </div>
 
-  <!-- Botão abaixo da frase -->
   <div class="botao">
     <button id="abrirVideo">Clique aqui</button>
   </div>
 
-  <!-- Popup com vídeo -->
   <div class="popup" id="popupVideo">
     <video id="videoAmor" src="video.mp4" controls autoplay></video>
   </div>
 
   <script>
-    // Contador
     const dataInicio = new Date("2023-09-22T00:00:00");
 
     function atualizarContador() {
@@ -178,6 +175,9 @@
 
       const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
       diff -= anos * (1000 * 60 * 60 * 24 * 365.25);
+
+      const meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+      diff -= meses * (1000 * 60 * 60 * 24 * 30.44);
 
       const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
       diff -= dias * (1000 * 60 * 60 * 24);
@@ -191,14 +191,13 @@
       const segundos = Math.floor(diff / 1000);
 
       document.getElementById("contador").innerHTML = `
-        ${anos} ano(s), ${dias} dia(s), ${horas} hora(s), ${minutos} minuto(s) e ${segundos} segundo(s) juntos 💖
+        Te amo há ${anos} ano(s), ${meses} mês(es), ${dias} dia(s), ${horas} hora(s), ${minutos} minuto(s) e ${segundos} segundo(s) 💖
       `;
     }
 
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
-    // Slide animado
     const wrapper = document.getElementById("slidesWrapper");
     const totalImagens = wrapper.children.length;
     let indiceAtual = 0;
@@ -210,7 +209,6 @@
 
     setInterval(mostrarProximaImagem, 5000);
 
-    // Popup de vídeo
     const abrirBtn = document.getElementById("abrirVideo");
     const popup = document.getElementById("popupVideo");
     const video = document.getElementById("videoAmor");
