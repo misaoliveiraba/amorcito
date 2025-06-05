@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nosso Amor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #ffe6f0, #fff0f5);
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2em;
+      color: #d6336c;
+    }
+
+    .slider {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      height: 500px; /* AUMENTADO EM 50% */
+      margin: 20px auto;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .slides-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+
+    .slides-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border-radius: 15px;
+    }
+
+    .contador {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #6a1b9a;
+    }
+
+    .frase {
+      margin-top: 30px;
+      font-size: 1.4em;
+      font-style: italic;
+      color: #c2185b;
+      padding: 0 15px;
+    }
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 1.6em;
+      }
+
+      .contador {
+        font-size: 1em;
+      }
+
+      .frase {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Nosso Amor em Cada Segundo</h1>
+
+  <div class="slider">
+    <div class="slides-wrapper" id="slidesWrapper">
+      <img src="fotos/amor01.jpg" alt="Amor 1" />
+      <img src="fotos/amor02.jpg" alt="Amor 2" />
+      <img src="fotos/amor03.jpg" alt="Amor 3" />
+      <img src="fotos/amor04.jpg" alt="Amor 4" />
+      <img src="fotos/amor05.jpg" alt="Amor 5" />
+      <img src="fotos/amor06.jpg" alt="Amor 6" />
+      <img src="fotos/amor07.jpg" alt="Amor 7" />
+      <img src="fotos/amor08.jpg" alt="Amor 8" />
+      <img src="fotos/amor09.jpg" alt="Amor 9" />
+    </div>
+  </div>
+
+  <div class="contador" id="contador">
+    Carregando contador...
+  </div>
+
+  <div class="frase">
+    "Em cada batida do meu coração, existe um 'eu te amo' que nasceu desde o nosso primeiro olhar."
+  </div>
+
+  <script>
+    // Contador
+    const dataInicio = new Date("2023-09-22T00:00:00");
+
+    function atualizarContador() {
+      const agora = new Date();
+      let diff = agora - dataInicio;
+
+      const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      diff -= anos * (1000 * 60 * 60 * 24 * 365.25);
+
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= dias * (1000 * 60 * 60 * 24);
+
+      const horas = Math.floor(diff / (1000 * 60 * 60));
+      diff -= horas * (1000 * 60 * 60);
+
+      const minutos = Math.floor(diff / (1000 * 60));
+      diff -= minutos * (1000 * 60);
+
+      const segundos = Math.floor(diff / 1000);
+
+      document.getElementById("contador").innerHTML = `
+        ${anos} ano(s), ${dias} dia(s), ${horas} hora(s), ${minutos} minuto(s) e ${segundos} segundo(s) juntos 💖
+      `;
+    }
+
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+
+    // Slide com animação suave
+    const wrapper = document.getElementById("slidesWrapper");
+    const totalImagens = wrapper.children.length;
+    let indiceAtual = 0;
+
+    function mostrarProximaImagem() {
+      indiceAtual = (indiceAtual + 1) % totalImagens;
+      wrapper.style.transform = `translateX(-${indiceAtual * 100}%)`;
+    }
+
+    setInterval(mostrarProximaImagem, 5000); // Troca a cada 5 segundos
+  </script>
+
+</body>
+</html>
