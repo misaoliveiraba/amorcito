@@ -29,7 +29,7 @@
       position: relative;
       width: 100%;
       max-width: 360px;
-      height: 400px; /* AUMENTADO EM 50% */
+      height: 390px;
       margin: 20px auto;
       border-radius: 15px;
       overflow: hidden;
@@ -63,6 +63,58 @@
       font-style: italic;
       color: #c2185b;
       padding: 0 15px;
+    }
+
+    .botao {
+      margin-top: 25px;
+    }
+
+    .botao button {
+      background-color: #ff69b4;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .botao button:hover {
+      background-color: #e055a1;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup video {
+      max-width: 90%;
+      max-height: 80%;
+      border: 5px solid white;
+      border-radius: 10px;
+    }
+
+    .popup.active {
+      display: flex;
+    }
+
+    .popup::after {
+      content: "✖";
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 2em;
+      cursor: pointer;
     }
 
     @media (max-width: 400px) {
@@ -106,6 +158,16 @@
     "Em cada batida do meu coração, existe um 'eu te amo' que nasceu desde o nosso primeiro olhar."
   </div>
 
+  <!-- Botão abaixo da frase -->
+  <div class="botao">
+    <button id="abrirVideo">Clique aqui</button>
+  </div>
+
+  <!-- Popup com vídeo -->
+  <div class="popup" id="popupVideo">
+    <video id="videoAmor" src="video.mp4" controls autoplay></video>
+  </div>
+
   <script>
     // Contador
     const dataInicio = new Date("2023-09-22T00:00:00");
@@ -136,7 +198,7 @@
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
-    // Slide com animação suave
+    // Slide animado
     const wrapper = document.getElementById("slidesWrapper");
     const totalImagens = wrapper.children.length;
     let indiceAtual = 0;
@@ -146,7 +208,23 @@
       wrapper.style.transform = `translateX(-${indiceAtual * 100}%)`;
     }
 
-    setInterval(mostrarProximaImagem, 5000); // Troca a cada 5 segundos
+    setInterval(mostrarProximaImagem, 5000);
+
+    // Popup de vídeo
+    const abrirBtn = document.getElementById("abrirVideo");
+    const popup = document.getElementById("popupVideo");
+    const video = document.getElementById("videoAmor");
+
+    abrirBtn.onclick = () => {
+      popup.classList.add("active");
+      video.currentTime = 0;
+      video.play();
+    };
+
+    popup.onclick = () => {
+      popup.classList.remove("active");
+      video.pause();
+    };
   </script>
 
 </body>
