@@ -13,14 +13,57 @@
     }
 
     body {
+      overflow: hidden;
+      background: #fff0f5;
+    }
+
+    /* Splash screen */
+    .splash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       background: linear-gradient(to right, #ffe6f0, #fff0f5);
-      color: #333;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      transition: transform 1s ease-in-out;
+    }
+
+    .splash button {
+      background-color: #ff69b4;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.4em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .splash button:hover {
+      background-color: #e055a1;
+    }
+
+    .main-content {
+      position: absolute;
+      top: 0;
+      left: 100vw;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(to right, #ffe6f0, #fff0f5);
+      overflow-y: auto;
+      transition: left 1s ease-in-out;
       padding: 20px;
+      text-align: center;
+    }
+
+    .main-content.active {
+      left: 0;
     }
 
     h1 {
-      margin-top: 20px;
       font-size: 2em;
       color: #d6336c;
     }
@@ -29,7 +72,7 @@
       position: relative;
       width: 100%;
       max-width: 360px;
-      height: 360px;
+      height: 390px;
       margin: 20px auto;
       border-radius: 15px;
       overflow: hidden;
@@ -130,40 +173,64 @@
         font-size: 1.2em;
       }
     }
+
+    /* Chuva de corações */
+    .heart {
+      position: fixed;
+      top: -20px;
+      color: #ff69b4;
+      animation: fall 5s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>Nosso Amor em Cada Segundo</h1>
+  <!-- Splash de entrada -->
+  <div class="splash" id="splash">
+    <button onclick="entrar()">Clique Aqui</button>
+  </div>
 
-  <div class="slider">
-    <div class="slides-wrapper" id="slidesWrapper">
-      <img src="fotos/amor01.jpg" alt="Amor 1" />
-      <img src="fotos/amor02.jpg" alt="Amor 2" />
-      <img src="fotos/amor03.jpg" alt="Amor 3" />
-      <img src="fotos/amor04.jpg" alt="Amor 4" />
-      <img src="fotos/amor05.jpg" alt="Amor 5" />
-      <img src="fotos/amor06.jpg" alt="Amor 6" />
-      <img src="fotos/amor07.jpg" alt="Amor 7" />
-      <img src="fotos/amor08.jpg" alt="Amor 8" />
-      <img src="fotos/amor09.jpg" alt="Amor 9" />
+  <!-- Página principal -->
+  <div class="main-content" id="mainContent">
+    <h1>Nosso Amor em Cada Segundo</h1>
+
+    <div class="slider">
+      <div class="slides-wrapper" id="slidesWrapper">
+        <img src="fotos/amor01.jpg" alt="Amor 1" />
+        <img src="fotos/amor02.jpg" alt="Amor 2" />
+        <img src="fotos/amor03.jpg" alt="Amor 3" />
+        <img src="fotos/amor04.jpg" alt="Amor 4" />
+        <img src="fotos/amor05.jpg" alt="Amor 5" />
+        <img src="fotos/amor06.jpg" alt="Amor 6" />
+        <img src="fotos/amor07.jpg" alt="Amor 7" />
+        <img src="fotos/amor08.jpg" alt="Amor 8" />
+        <img src="fotos/amor09.jpg" alt="Amor 9" />
+      </div>
     </div>
-  </div>
 
-  <div class="contador" id="contador">
-    Carregando contador...
-  </div>
+    <div class="contador" id="contador">
+      Carregando contador...
+    </div>
 
-  <div class="frase">
-    "Em cada batida do meu coração, existe um 'eu te amo' que nasceu desde o nosso primeiro olhar."
-  </div>
+    <div class="frase">
+      "Em cada batida do meu coração, existe um 'eu te amo' que nasceu desde o nosso primeiro olhar."
+    </div>
 
-  <div class="botao">
-    <button id="abrirVideo">Clique aqui</button>
-  </div>
+    <div class="botao">
+      <button id="abrirVideo">Clique aqui</button>
+    </div>
 
-  <div class="popup" id="popupVideo">
-    <video id="videoAmor" src="video.mp4" controls autoplay></video>
+    <div class="popup" id="popupVideo">
+      <video id="videoAmor" src="video.mp4" controls autoplay></video>
+    </div>
   </div>
 
   <script>
@@ -223,7 +290,28 @@
       popup.classList.remove("active");
       video.pause();
     };
-  </script>
 
+    // Splash -> Main
+    function entrar() {
+      document.getElementById("splash").style.transform = "translateX(-100%)";
+      document.getElementById("mainContent").classList.add("active");
+    }
+
+    // Corações
+    function criarCoracao() {
+      const heart = document.createElement('span');
+      heart.className = 'heart';
+      heart.textContent = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    setInterval(criarCoracao, 300);
+  </script>
 </body>
 </html>
