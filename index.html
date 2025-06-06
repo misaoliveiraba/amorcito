@@ -103,12 +103,6 @@
     h1 {
       font-size: 2em;
       color: #d6336c;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
     }
 
     .slider {
@@ -141,7 +135,6 @@
       margin-top: 20px;
       font-size: 1.2em;
       color: #6a1b9a;
-      animation: pulse 1.5s infinite;
     }
 
     .frase {
@@ -194,32 +187,41 @@
       display: flex;
     }
 
-    .typing {
-      display: inline-block;
-      border-right: 2px solid #c2185b;
-      white-space: nowrap;
-      overflow: hidden;
-      animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+    .popup::after {
+      content: "✖";
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 2em;
+      cursor: pointer;
     }
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 1.6em;
+      }
 
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #c2185b; }
+      .contador {
+        font-size: 1em;
+      }
+
+      .frase {
+        font-size: 1.2em;
+      }
     }
   </style>
 </head>
 <body>
+
   <div class="heart-container" id="heartContainer"></div>
 
+  <!-- Splash de entrada -->
   <div class="splash" id="splash">
     <button id="botaoSplash">Clique para abrir</button>
   </div>
 
+  <!-- Conteúdo principal -->
   <div class="main-content" id="mainContent">
     <h1>Nosso Amor em Cada Segundo</h1>
 
@@ -237,10 +239,12 @@
       </div>
     </div>
 
-    <div class="contador" id="contador">Carregando contador...</div>
+    <div class="contador" id="contador">
+      Carregando contador...
+    </div>
 
     <div class="frase">
-      <span class="typing">"Em cada batida do meu coração, existe um 'eu te amo' que nasceu desde o nosso primeiro olhar."</span>
+      "Em cada batida do meu coração, existe um 'eu te amo' que nasceu desde o nosso primeiro olhar."
     </div>
 
     <div class="botao">
@@ -254,35 +258,48 @@
 
   <script>
     const dataInicio = new Date("2023-09-22T00:00:00");
+
     function atualizarContador() {
       const agora = new Date();
       let diff = agora - dataInicio;
+
       const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
       diff -= anos * (1000 * 60 * 60 * 24 * 365.25);
+
       const meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
       diff -= meses * (1000 * 60 * 60 * 24 * 30.44);
+
       const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
       diff -= dias * (1000 * 60 * 60 * 24);
+
       const horas = Math.floor(diff / (1000 * 60 * 60));
       diff -= horas * (1000 * 60 * 60);
+
       const minutos = Math.floor(diff / (1000 * 60));
       diff -= minutos * (1000 * 60);
+
       const segundos = Math.floor(diff / 1000);
-      document.getElementById("contador").innerHTML = `Te amo há ${anos} ano(s), ${meses} mês(es), ${dias} dia(s), ${horas} hora(s), ${minutos} minuto(s) e ${segundos} segundo(s) 💖`;
+
+      document.getElementById("contador").innerHTML = `
+        Te amo há ${anos} ano(s), ${meses} mês(es), ${dias} dia(s), ${horas} hora(s), ${minutos} minuto(s) e ${segundos} segundo(s) 💖
+      `;
     }
+
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
     const wrapper = document.getElementById("slidesWrapper");
     const totalImagens = wrapper.children.length;
     let indiceAtual = 0;
+
     function mostrarProximaImagem() {
       indiceAtual = (indiceAtual + 1) % totalImagens;
       wrapper.style.transform = `translateX(-${indiceAtual * 100}%)`;
     }
+
     setInterval(mostrarProximaImagem, 5000);
 
-    document.getElementById("botaoSplash").onclick = function() {
+    document.getElementById("botaoSplash").onclick = function entrar() {
       document.getElementById("splash").style.transform = "translateX(-100%)";
       document.getElementById("mainContent").classList.add("active");
     };
@@ -290,11 +307,13 @@
     const abrirVideoBtn = document.getElementById("abrirVideo");
     const popup = document.getElementById("popupVideo");
     const video = document.getElementById("videoAmor");
+
     abrirVideoBtn.onclick = () => {
       popup.classList.add("active");
       video.currentTime = 0;
       video.play();
     };
+
     popup.onclick = () => {
       popup.classList.remove("active");
       video.pause();
@@ -307,8 +326,11 @@
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
       document.getElementById('heartContainer').appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
     }
+
     setInterval(criarCoracao, 300);
   </script>
 </body>
