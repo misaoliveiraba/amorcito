@@ -14,8 +14,19 @@
 
     body {
       overflow: hidden;
-      background: #fff0f5;
+      background: transparent;
       position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(to right, #ffe6f0, #fff0f5);
+      z-index: -2;
     }
 
     /* Fundo com corações */
@@ -45,7 +56,6 @@
       }
     }
 
-    /* Splash screen */
     .splash {
       position: fixed;
       top: 0; left: 0;
@@ -80,7 +90,7 @@
       left: 100vw;
       width: 100vw;
       height: 100vh;
-      background: linear-gradient(to right, #ffe6f0, #fff0f5);
+      background: transparent;
       overflow-y: auto;
       transition: left 1s ease-in-out;
       padding: 20px;
