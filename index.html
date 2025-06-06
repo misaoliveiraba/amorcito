@@ -15,6 +15,34 @@
     body {
       overflow: hidden;
       background: #fff0f5;
+      position: relative;
+    }
+
+    /* Fundo com corações */
+    .heart-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .heart-container .heart {
+      position: absolute;
+      top: -20px;
+      color: #ff69b4;
+      animation: fall 5s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     /* Splash screen */
@@ -173,25 +201,12 @@
         font-size: 1.2em;
       }
     }
-
-    /* Chuva de corações */
-    .heart {
-      position: fixed;
-      top: -20px;
-      color: #ff69b4;
-      animation: fall 5s linear infinite;
-      z-index: 0;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
   </style>
 </head>
 <body>
+
+  <!-- Corações no fundo -->
+  <div class="heart-container" id="heartContainer"></div>
 
   <!-- Splash de entrada -->
   <div class="splash" id="splash">
@@ -291,21 +306,18 @@
       video.pause();
     };
 
-    // Splash -> Main
     function entrar() {
       document.getElementById("splash").style.transform = "translateX(-100%)";
       document.getElementById("mainContent").classList.add("active");
     }
 
-    // Corações
     function criarCoracao() {
       const heart = document.createElement('span');
       heart.className = 'heart';
       heart.textContent = '💖';
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
-      document.body.appendChild(heart);
-
+      document.getElementById('heartContainer').appendChild(heart);
       setTimeout(() => {
         heart.remove();
       }, 5000);
