@@ -29,7 +29,6 @@
       z-index: -2;
     }
 
-    /* Fundo com corações */
     .heart-container {
       position: fixed;
       top: 0;
@@ -41,7 +40,7 @@
       overflow: hidden;
     }
 
-    .heart-container .heart {
+    .heart {
       position: absolute;
       top: -20px;
       color: #ff69b4;
@@ -215,15 +214,14 @@
 </head>
 <body>
 
-  <!-- Corações no fundo -->
   <div class="heart-container" id="heartContainer"></div>
 
   <!-- Splash de entrada -->
   <div class="splash" id="splash">
-    <button onclick="entrar()">Clique Aqui</button>
+    <button id="botaoSplash">Clique para abrir</button>
   </div>
 
-  <!-- Página principal -->
+  <!-- Conteúdo principal -->
   <div class="main-content" id="mainContent">
     <h1>Nosso Amor em Cada Segundo</h1>
 
@@ -301,11 +299,16 @@
 
     setInterval(mostrarProximaImagem, 5000);
 
-    const abrirBtn = document.getElementById("abrirVideo");
+    document.getElementById("botaoSplash").onclick = function entrar() {
+      document.getElementById("splash").style.transform = "translateX(-100%)";
+      document.getElementById("mainContent").classList.add("active");
+    };
+
+    const abrirVideoBtn = document.getElementById("abrirVideo");
     const popup = document.getElementById("popupVideo");
     const video = document.getElementById("videoAmor");
 
-    abrirBtn.onclick = () => {
+    abrirVideoBtn.onclick = () => {
       popup.classList.add("active");
       video.currentTime = 0;
       video.play();
@@ -315,11 +318,6 @@
       popup.classList.remove("active");
       video.pause();
     };
-
-    function entrar() {
-      document.getElementById("splash").style.transform = "translateX(-100%)";
-      document.getElementById("mainContent").classList.add("active");
-    }
 
     function criarCoracao() {
       const heart = document.createElement('span');
