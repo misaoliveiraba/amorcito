@@ -103,6 +103,7 @@
     h1 {
       font-size: 2em;
       color: #d6336c;
+      margin-top: 10px;
     }
 
     .slider {
@@ -135,6 +136,7 @@
       margin-top: 20px;
       font-size: 1.2em;
       color: #6a1b9a;
+      padding: 0 10px;
     }
 
     .frase {
@@ -174,6 +176,7 @@
       justify-content: center;
       align-items: center;
       z-index: 999;
+      flex-direction: column;
     }
 
     .popup video {
@@ -187,19 +190,27 @@
       display: flex;
     }
 
-    .popup::after {
-      content: "✖";
+    .fechar-popup {
       position: absolute;
       top: 20px;
       right: 30px;
       color: white;
+      background: transparent;
+      border: none;
       font-size: 2em;
       cursor: pointer;
+      z-index: 1000;
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 480px) {
       h1 {
-        font-size: 1.6em;
+        font-size: 1.5em;
+        padding: 10px;
+      }
+
+      .slider {
+        height: 260px;
+        max-width: 90%;
       }
 
       .contador {
@@ -207,7 +218,24 @@
       }
 
       .frase {
-        font-size: 1.2em;
+        font-size: 1.1em;
+        padding: 0 10px;
+      }
+
+      .botao button {
+        font-size: 0.95em;
+        padding: 10px 18px;
+      }
+
+      .popup video {
+        max-width: 95%;
+        max-height: 70%;
+      }
+
+      .fechar-popup {
+        font-size: 1.6em;
+        top: 15px;
+        right: 15px;
       }
     }
   </style>
@@ -216,35 +244,31 @@
 
   <div class="heart-container" id="heartContainer"></div>
 
-  <!-- Splash de entrada -->
   <div class="splash" id="splash">
     <button id="botaoSplash">Clique para abrir</button>
   </div>
 
-  <!-- Conteúdo principal -->
   <div class="main-content" id="mainContent">
     <h1>Nosso Amor em Cada Segundo</h1>
 
     <div class="slider">
       <div class="slides-wrapper" id="slidesWrapper">
-        <img src="fotos/amor01.jpg" alt="Amor 1" />
-        <img src="fotos/amor02.jpg" alt="Amor 2" />
-        <img src="fotos/amor03.jpg" alt="Amor 3" />
-        <img src="fotos/amor04.jpg" alt="Amor 4" />
-        <img src="fotos/amor05.jpg" alt="Amor 5" />
-        <img src="fotos/amor06.jpg" alt="Amor 6" />
-        <img src="fotos/amor07.jpg" alt="Amor 7" />
-        <img src="fotos/amor08.jpg" alt="Amor 8" />
-        <img src="fotos/amor09.jpg" alt="Amor 9" />
+        <img src="fotos/amor01.jpg" alt="Nosso primeiro passeio juntos" />
+        <img src="fotos/amor02.jpg" alt="Nosso primeiro abraço" />
+        <img src="fotos/amor03.jpg" alt="Nosso sorriso compartilhado" />
+        <img src="fotos/amor04.jpg" alt="Dia especial juntos" />
+        <img src="fotos/amor05.jpg" alt="Mais uma lembrança do nosso amor" />
+        <img src="fotos/amor06.jpg" alt="Carinho em forma de foto" />
+        <img src="fotos/amor07.jpg" alt="Você e eu" />
+        <img src="fotos/amor08.jpg" alt="Momentos inesquecíveis" />
+        <img src="fotos/amor09.jpg" alt="Nosso amor crescendo" />
       </div>
     </div>
 
-    <div class="contador" id="contador">
-      Carregando contador...
-    </div>
+    <div class="contador" id="contador">Carregando contador...</div>
 
     <div class="frase">
-      "Em cada batida do meu coração, existe um 'eu te amo' que nasceu desde o nosso primeiro olhar."
+      Em cada batida do meu coração, existe um eu te amo que nasceu desde o nosso primeiro olhar.
     </div>
 
     <div class="botao">
@@ -253,11 +277,16 @@
 
     <div class="popup" id="popupVideo">
       <video id="videoAmor" src="video.mp4" controls autoplay></video>
+      <button class="fechar-popup" id="fecharPopup">✖</button>
     </div>
   </div>
 
   <script>
     const dataInicio = new Date("2023-09-22T00:00:00");
+
+    function plural(valor, singular, plural) {
+      return valor === 1 ? singular : plural;
+    }
 
     function atualizarContador() {
       const agora = new Date();
@@ -281,7 +310,12 @@
       const segundos = Math.floor(diff / 1000);
 
       document.getElementById("contador").innerHTML = `
-        Te amo há ${anos} ano(s), ${meses} mês(es), ${dias} dia(s), ${horas} hora(s), ${minutos} minuto(s) e ${segundos} segundo(s) 💖
+        Te amo há ${anos} ${plural(anos, "ano", "anos")}, 
+        ${meses} ${plural(meses, "mês", "meses")}, 
+        ${dias} ${plural(dias, "dia", "dias")}, 
+        ${horas} ${plural(horas, "hora", "horas")}, 
+        ${minutos} ${plural(minutos, "minuto", "minutos")} e 
+        ${segundos} ${plural(segundos, "segundo", "segundos")} 💖
       `;
     }
 
@@ -299,14 +333,17 @@
 
     setInterval(mostrarProximaImagem, 5000);
 
-    document.getElementById("botaoSplash").onclick = function entrar() {
-      document.getElementById("splash").style.transform = "translateX(-100%)";
+    document.getElementById("botaoSplash").onclick = function () {
+      const splash = document.getElementById("splash");
+      splash.style.transform = "translateX(-100%)";
+      setTimeout(() => splash.style.display = "none", 1000);
       document.getElementById("mainContent").classList.add("active");
     };
 
     const abrirVideoBtn = document.getElementById("abrirVideo");
     const popup = document.getElementById("popupVideo");
     const video = document.getElementById("videoAmor");
+    const fecharPopupBtn = document.getElementById("fecharPopup");
 
     abrirVideoBtn.onclick = () => {
       popup.classList.add("active");
@@ -314,7 +351,7 @@
       video.play();
     };
 
-    popup.onclick = () => {
+    fecharPopupBtn.onclick = () => {
       popup.classList.remove("active");
       video.pause();
     };
@@ -326,9 +363,7 @@
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
       document.getElementById('heartContainer').appendChild(heart);
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
+      setTimeout(() => heart.remove(), 5000);
     }
 
     setInterval(criarCoracao, 300);
